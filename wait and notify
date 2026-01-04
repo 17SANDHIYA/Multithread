@@ -1,0 +1,43 @@
+class Task{
+    synchronized void print(){  //create a method
+        try{                   // try used to own logic code 
+            System.out.println(Thread.currentThread().getName());
+            wait();
+            System.out.println(Thread.currentThread().getName());
+            
+            
+        }
+        catch(InterruptedException e){ //handle the errors without blocking code
+            System.out.println("Error");
+        }
+        System.out.println("Completed");
+    }
+    
+    synchronized void notifyThread(){
+        System.out.println(Thread.currentThread().getName());
+        notify(); //to get the working status
+    }
+}
+public class Main
+{
+	public static void main(String[] args) throws InterruptedException {
+		Task a=new Task();
+		Task b=new Task();
+		
+		Thread t1=new Thread(()->{a.print();},"Thread 1");  //print can be used because parent class task synchronized void print()
+		Thread t2=new Thread(()->{
+		    try{
+		        Thread.sleep(2000);
+		        a.notifyThread();
+		        }catch(Exception e){
+		            e.printStackTrace();
+		            }
+		            },"Thread 2");
+		t1.start();
+		Thread.sleep(500);
+		t2.start();
+		t1.join();  //join  
+		t2.join();
+		System.out.println("Main Thread");  //it shows the current state 
+	}
+}
