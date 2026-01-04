@@ -1,0 +1,18 @@
+class Cake extends Thread{
+    public void run(){
+        System.out.println("Mixing"+Cake.currentThread().getId());
+        System.out.println("Baking"+Cake.currentThread().getId());
+        System.out.println("Decorating"+Cake.currentThread().getId());
+        
+    }
+}
+    
+   public class Main {
+        public static void main(String[] args){
+            int cakecount=4;
+            for(int i=0;i<cakecount;i++){
+                Cake c=new Cake();
+                c.start();
+            }
+        }
+    }
